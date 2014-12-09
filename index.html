@@ -1,43 +1,87 @@
-<!--
-Usa este archivo para tu proyecto. No olvides hacer
-la estructura correta y guardar TODO tu CSS en el archivo styles.css
- -->
-<!DOCTYPE html>
-<!-- saved from url=(0039)http://getbootstrap.com/examples/blog/# -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="http://getbootstrap.com/favicon.ico">
-
-    <title>Cognits Blog</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="css/styles.css" rel="stylesheet">
-
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
+<!DOCTYPE HTML >
+<html>
+<head>
+<title>proyecto</title>
+<meta charset="utf-8">
+<link href="style.css" rel="stylesheet">
 </head>
 
-  <body>
+<body >
+  <div class = "pronos"><h1>Pronostico </h1><p class ="list2" id="panel"></p> </div>
+  <div class = "pronos2"><p class ="list3" id="panel"></p> </div>
+  <div><button id="flip">Click</button></div>
+  <div><button id="flip2">Pronostico</button></div>
 
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+<script>
+    $("div").fadeIn("slow");
+    $(".pronos").fadeTo("fast",0.6);
+    $(".pronos2").fadeTo("fast",0.6);
 
+$(document).ready(function(){
+  $("#flip2").click(function(){
+jQuery(document).ready(function($) { 
+  var pregunta = prompt("quiere mostrar grados °C o °F para °C ingrece 'c' para °F ingrese 'f'");
+  var pais = prompt("Ingrese pais: ").toLowerCase();
+  var nombrePais = "";
+  $.ajax({ 
+    url : "paises.json", dataType : "json",
+    success : function(parsed_json) {
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/script.js"></script>
-    <script src="js/bootstrap.js"></script>
+      for (var i = 0; i <= 242; i++) {
+        if (((parsed_json[i]["name"]).toLowerCase()) == pais.toLowerCase()){
+          nombrePais = parsed_json[i]["name"];
+          var codPais = parsed_json[i]["code"];
+          var bandera = parsed_json[i]["bandera"];
 
-  </body>
+        };
+      };
+      /*Codigo para la segunda parte*/
+      if (nombrePais.length==0) {
+        alert("No se encontro nada de lo que usted quiere buscar....");
+      }else{
+        var departamento = prompt("Ingrese departamento: ");
+        var direccion = "http://api.wunderground.com/api/0a3dd826c5ddd6ff/conditions/q/"+codPais+"/"+departamento+".json";
+        $(document).ready(function(){
+          jQuery(document).ready(function($) { 
+            $.ajax({ url : direccion, dataType : "jsonp",
+              success : function(parsed_json2) {
+                if(parsed_json2["current_observation"]){
+                  var location = parsed_json2['current_observation']['display_location']['city']; 
+                  if (pregunta == "c"){
+                  var tempC = parsed_json2['current_observation']['temp_c']+"°C"; 
+                }else{
+                  var tempC = parsed_json2['current_observation']['temp_f']+"°F";
+
+}
+                  var icono = parsed_json2["current_observation"]["icon_url"]
+                  var fecha = parsed_json2["current_observation"]["local_time_rfc822"]
+                  var weather = parsed_json2["current_observation"]["weather"]
+                  
+                  $(".list2").append("Current temperature in " + location +" "+codPais + " is: " + tempC  +"<br/> "+"<img src=\""+bandera+"\">");
+                  $(".list3").append(weather+"<br/>"+"<img src=\""+icono+"\">"+"<br/>"+fecha)
+
+                }else{
+                  alert("Error! No estan ingresando bien");
+                }
+              }
+            });
+          });
+        });
+      };
+    }
+  });
+});
+$(document).ready(function(){
+  $("#flip").click(function(){
+    $("#panel").slideToggle("slow");
+  });
+});
+  });
+});
+</script>
+
+ 
+</body>
+
 </html>

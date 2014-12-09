@@ -1,0 +1,51 @@
+
+body {
+	background:url("http://image.dek-d.com/24/2571730/107783298");
+
+}
+div {
+text-align:center;
+
+text-shadow: 5px 5px 5px #0f13e5;
+
+}
+
+p {
+line-height: 100px;
+border-radius: 10px;
+background-color: #76726c;
+
+font-family: "Times New Roman", Times, serif;
+text-shadow: 5px 5px 5px #FF0000;
+width: 150px;
+margin:0 auto 0 auto;
+
+
+
+
+    -webkit-box-shadow: 0 0 8px #FFD700;
+    -moz-box-shadow: 0 0 8px #FFD700;
+    box-shadow: 0 0 8px #FFD700;
+
+
+}
+
+
+#panel,#flip
+{
+padding:5px;
+text-align:center;
+
+
+
+}
+#panel
+{
+padding:50px;
+
+
+}
+
+.pronos2 {
+margin: -100px 10px 10px 800px;
+}
